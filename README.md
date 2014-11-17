@@ -1,4 +1,4 @@
 assembly-timer
 ==============
 
-AngularJS Timer to use in Assembly Halls all over the world!
+AngularJS Timer to use in assembly halls all over the world!
