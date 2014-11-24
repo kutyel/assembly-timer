@@ -13,7 +13,7 @@
             <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="deadline"></input>
             <button ng-click="startTimer(deadline)" ng-disabled="timerRunning">Start</button>
             <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop</button>
-            <input type="range" class="range" min=20 max=300 ng-model="size" ng-change="changeSize(size)"></input>
+            <input type="range" class="range" min=20 max=300 ng-model="size" ng-change="changeSize(size)" ng-init="size=20"></input>
             <input type="checkbox" ng-model="blink">Blink?</input>
         </form>
         <div class="timer" ng-style="fontSize">
