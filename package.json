@@ -1,0 +1,38 @@
+{
+  "name": "assembly-timer",
+  "version": "1.0.0",
+  "description": "AngularJS Timer to use in Assembly Halls all over the world!",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "karma start karma.conf.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kutyel/assembly-timer.git"
+  },
+  "keywords": [
+    "angularjs",
+    "timer",
+    "tests"
+  ],
+  "author": "Flavio Corpa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kutyel/assembly-timer/issues"
+  },
+  "homepage": "https://github.com/kutyel/assembly-timer#readme",
+  "dependencies": {
+    "angular": "^1.5.0-beta.0"
+  },
+  "devDependencies": {
+    "angular-mocks": "^1.5.0-beta.0",
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.9",
+    "karma-chrome-launcher": "^0.2.0",
+    "karma-jasmine": "^0.3.6",
+    "karma-ng-html2js-preprocessor": "^0.1.2"
+  }
+}
