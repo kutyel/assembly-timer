@@ -5,6 +5,6 @@
     "js/**/*.js"
   ],
   "tests": [
-    "test/**/*.js"
+    "test/**/*.coffee"
   ]
 }
