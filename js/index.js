@@ -1,36 +1,54 @@
-angular.module('MyApp', ['timer'])
-.controller('TimerCtrl', ['$scope', function ($scope) {
+(function() {
+    'use strict';
 
-    $scope.blink = true;
-    $scope.fontSize = {};
-    $scope.timerColor = {};
-    $scope.deadlineMillis = 0;
-    $scope.timerRunning = false;
+    angular
+        .module('app', ['timer'])
+        .controller('TimerCtrl', TimerCtrl);
 
-    $scope.timeOver = function () {
-        $scope.timerColor.color = $scope.blink ? 'blinking-end' : 'end';
-    };
+    TimerCtrl.$inject = ['$scope'];
 
-    $scope.changeSize = function (value) {
-        $scope.fontSize = { 'font-size': value + 'px' };
-    };
+    function TimerCtrl($scope) {
+        var vm = this;
+        vm.blink = true;
+        vm.fontSize = {};
+        vm.timerColor = {};
+        vm.deadlineMillis = 0;
+        vm.timerRunning = false;
 
-    $scope.startTimer = function (deadline) {
-        $scope.$broadcast('timer-start');
-        $scope.timerRunning = true;
-        $scope.deadlineMillis += deadline * 1000 * 60;
-    };
+        activate();
 
-    $scope.stopTimer = function () {
-        $scope.$broadcast('timer-stop');
-        $scope.timerColor = {};
-        $scope.deadlineMillis = 0;
-        $scope.timerRunning = false;
-    };
-
-    $scope.$on('timer-tick', function (event, data) {
-        if ($scope.timerRunning && data.millis >= $scope.deadlineMillis) {
-            $scope.$apply($scope.timeOver);
+        function activate() {
+            vm.timeOver = timeOver;
+            vm.changeSize = changeSize;
+            vm.startTimer = startTimer;
+            vm.stopTimer = stopTimer;
         }
-    });
-}]);
+
+        function timeOver() {
+            vm.timerColor.color = vm.blink ? 'blinking-end' : 'end';
+        };
+
+        function changeSize(value) {
+            vm.fontSize = { 'font-size': value + 'px' };
+        };
+
+        function startTimer(deadline) {
+            $scope.$broadcast('timer-start');
+            vm.timerRunning = true;
+            vm.deadlineMillis += deadline * 1000 * 60;
+        };
+
+        function stopTimer() {
+            $scope.$broadcast('timer-stop');
+            vm.timerColor = {};
+            vm.deadlineMillis = 0;
+            vm.timerRunning = false;
+        };
+
+        $scope.$on('timer-tick', function (event, data) {
+            if (vm.timerRunning && data.millis >= vm.deadlineMillis) {
+                $scope.$apply(vm.timeOver);
+            }
+        });
+    }
+})();

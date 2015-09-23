@@ -3,21 +3,23 @@
 <head>
     <title>Assembly Hall Timer</title>
     <link rel="stylesheet" type="text/css" href="style.css">
-    <script src="node_modules/angular/angular.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="https://code.angularjs.org/favicon.ico"/>
+    <script src="node_modules/angular/angular.js"></script>
     <script src="js/timer.js"></script>
+    <!-- <script src="node_modules/angular-ui-bootstrap/ui-bootstrap.min.js" -->
     <script src="js/index.js"></script>
 </head>
-<body ng-app="MyApp">
-    <div ng-controller="TimerCtrl">
+<body ng-app="app">
+    <div ng-controller="TimerCtrl as vm">
         <form>
-            <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="deadline"></input>
-            <button ng-click="startTimer(deadline)" ng-disabled="timerRunning">Start</button>
-            <button ng-click="stopTimer()" ng-disabled="!timerRunning">Stop</button>
-            <input type="range" class="range" min=20 max=300 ng-model="size" ng-change="changeSize(size)" ng-init="size=20"></input>
-            <input type="checkbox" ng-model="blink">Blink?</input>
+            <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="vm.deadline"></input>
+            <button ng-click="vm.startTimer(deadline)" ng-disabled="vm.timerRunning">Start</button>
+            <button ng-click="vm.stopTimer()" ng-disabled="!vm.timerRunning">Stop</button>
+            <input type="range" class="range" min=20 max=300 ng-model="vm.size" ng-change="vm.changeSize(vm.size)" ng-init="vm.size=20"></input>
+            <input type="checkbox" ng-model="vm.blink">Blink?</input>
         </form>
-        <div class="timer" ng-style="fontSize">
-            <h1 ng-class="timerColor.color"><timer interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
+        <div class="timer" ng-style="vm.fontSize">
+            <h1 ng-class="vm.timerColor.color"><timer interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
         </div>
     </div>
 </body>
