@@ -6,20 +6,26 @@
     <link rel="shortcut icon" type="image/png" href="https://code.angularjs.org/favicon.ico"/>
     <script src="node_modules/angular/angular.js"></script>
     <script src="js/timer.js"></script>
-    <!-- <script src="node_modules/angular-ui-bootstrap/ui-bootstrap.min.js" -->
+    <script src="node_modules/angular-ui-bootstrap/ui-bootstrap.min.js"></script>
     <script src="js/index.js"></script>
 </head>
 <body ng-app="app">
     <div ng-controller="TimerCtrl as vm">
         <form>
+            <!-- TODO: add angular-ui-bootstrap -->
             <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="vm.deadline"></input>
-            <button ng-click="vm.startTimer()">Start</button>
+            <!-- TODO: class="glyphicon glyphicon-play"-->
+            <button class="btn btn-primary" ng-click="vm.startTimer()" ng-show="!vm.running">Start</button>
+            <!-- TODO: class="glyphicon glyphicon-pause"-->
+            <button ng-click="vm.resumeTimer()">Resume</button>
+            <!-- TODO: class="glyphicon glyphicon-stop"-->
             <button ng-click="vm.stopTimer()" ng-disabled="!vm.running">Stop</button>
             <input type="range" class="range" min=20 max=300 ng-model="vm.size" ng-change="vm.changeSize(vm.size)" ng-init="vm.size=20"></input>
             <input type="checkbox" ng-model="vm.blink">Blink?</input>
         </form>
         <div class="timer" ng-style="vm.fontSize">
-            <h1><timer countup="vm.deadline * 60" finish-callback="vm.timeOver()" interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
+            <!-- TODO: add class to toggle by param to the directive -->
+            <h1><timer countup="vm.deadline*60" finish-callback="vm.timeOver()" interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
         </div>
     </div>
 </body>

@@ -10,7 +10,6 @@
     function TimerCtrl($scope) {
         var vm = this;
 
-        // TODO: add blink to directive
         vm.blink = true;
         vm.running = false;
         vm.fontSize = {};
