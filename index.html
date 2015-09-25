@@ -13,13 +13,13 @@
     <div ng-controller="TimerCtrl as vm">
         <form>
             <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="vm.deadline"></input>
-            <button ng-click="vm.startTimer(deadline)" ng-disabled="vm.timerRunning">Start</button>
-            <button ng-click="vm.stopTimer()" ng-disabled="!vm.timerRunning">Stop</button>
+            <button ng-click="vm.startTimer()">Start</button>
+            <button ng-click="vm.stopTimer()" ng-disabled="!vm.running">Stop</button>
             <input type="range" class="range" min=20 max=300 ng-model="vm.size" ng-change="vm.changeSize(vm.size)" ng-init="vm.size=20"></input>
             <input type="checkbox" ng-model="vm.blink">Blink?</input>
         </form>
         <div class="timer" ng-style="vm.fontSize">
-            <h1 ng-class="vm.timerColor.color"><timer interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
+            <h1><timer countup="vm.deadline * 60" finish-callback="vm.timeOver()" interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
         </div>
     </div>
 </body>

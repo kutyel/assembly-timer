@@ -7,6 +7,7 @@ var timerModule = angular.module('timer', [])
         interval: '=interval',
         startTimeAttr: '=startTime',
         endTimeAttr: '=endTime',
+        countupattr: '=countup',
         countdownattr: '=countdown',
         finishCallback: '&finishCallback',
         autoStart: '&autoStart',
@@ -36,6 +37,7 @@ var timerModule = angular.module('timer', [])
         $scope.startTime = null;
         $scope.endTime = null;
         $scope.timeoutId = null;
+        $scope.countup = $scope.countupattr && parseInt($scope.countupattr, 10) >= 0 ? parseInt($scope.countupattr, 10) : undefined;
         $scope.countdown = $scope.countdownattr && parseInt($scope.countdownattr, 10) >= 0 ? parseInt($scope.countdownattr, 10) : undefined;
         $scope.isRunning = false;
 
@@ -68,6 +70,10 @@ var timerModule = angular.module('timer', [])
         $scope.start = $element[0].start = function () {
           $scope.startTime = $scope.startTimeAttr ? new Date($scope.startTimeAttr) : new Date();
           $scope.endTime = $scope.endTimeAttr ? new Date($scope.endTimeAttr) : null;
+          if (!$scope.countup) {
+            $scope.countup = $scope.countupattr && parseInt($scope.countupattr, 10) > 0 ? parseInt($scope.countupattr, 10) : undefined;
+            $scope.countup = $scope.countup * 1000;
+          }
           if (!$scope.countdown) {
             $scope.countdown = $scope.countdownattr && parseInt($scope.countdownattr, 10) > 0 ? parseInt($scope.countdownattr, 10) : undefined;
           }
@@ -96,6 +102,7 @@ var timerModule = angular.module('timer', [])
           // same as stop but without the event being triggered
           $scope.stoppedTime = new Date();
           resetTimeout();
+          $scope.countup = null;
           $scope.timeoutId = null;
           $scope.isRunning = false;
         };
@@ -167,7 +174,6 @@ var timerModule = angular.module('timer', [])
           $scope.ddays = $scope.days < 10 ? '0' + $scope.days : $scope.days;
           $scope.mmonths = $scope.months < 10 ? '0' + $scope.months : $scope.months;
           $scope.yyears = $scope.years < 10 ? '0' + $scope.years : $scope.years;
-
         }
 
         //determine initial values of time units and add AddSeconds functionality
@@ -212,7 +218,6 @@ var timerModule = angular.module('timer', [])
             adjustment = $scope.interval - $scope.millis % 1000;
           }
 
-
           if ($scope.countdownattr) {
             $scope.millis = $scope.countdown * 1000;
           }
@@ -236,6 +241,12 @@ var timerModule = angular.module('timer', [])
 
           $scope.$emit('timer-tick', {timeoutId: $scope.timeoutId, millis: $scope.millis});
 
+          $scope.$on('timer-tick', function (event, data) {
+            if ($scope.countup && $scope.isRunning && data.millis >= $scope.countup) {
+              $scope.$emit('time-over');
+            }
+          });
+
           if ($scope.countdown > 0) {
             $scope.countdown--;
           }
@@ -250,9 +261,17 @@ var timerModule = angular.module('timer', [])
         if ($scope.autoStart === undefined || $scope.autoStart === true) {
           $scope.start();
         }
-      }]
-    };
-  }]);
+    }],
+    link: function(scope, element) {
+        scope.$on('time-over', function () {
+            element.addClass('blinking-end');
+        });
+        scope.$on('timer-stop', function () {
+            element.removeClass('blinking-end');
+        });
+    }
+  };
+}]);
 
 /* commonjs package manager support (eg componentjs) */
 if (typeof module !== "undefined" && typeof exports !== "undefined" && module.exports === exports){
