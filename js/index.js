@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['timer'])
+        .module('app', ['timer', 'ui.bootstrap'])
         .controller('TimerCtrl', TimerCtrl);
 
     TimerCtrl.$inject = ['$scope'];
@@ -10,13 +10,12 @@
     function TimerCtrl($scope) {
         var vm = this;
 
-        vm.blink = true;
-        vm.running = false;
-        vm.fontSize = {};
-
         init();
 
         function init() {
+            vm.blink = true;
+            vm.running = false;
+            vm.fontSize = {};
             vm.changeSize = changeSize;
             vm.startTimer = startTimer;
             vm.resumeTimer = resumeTimer;

@@ -4,6 +4,7 @@ var timerModule = angular.module('timer', [])
       restrict: 'EAC',
       replace: false,
       scope: {
+        finalClass: '=',
         interval: '=interval',
         startTimeAttr: '=startTime',
         endTimeAttr: '=endTime',
@@ -264,10 +265,10 @@ var timerModule = angular.module('timer', [])
     }],
     link: function(scope, element) {
         scope.$on('time-over', function () {
-            element.addClass('blinking-end');
+            element.addClass(scope.finalClass);
         });
         scope.$on('timer-stop', function () {
-            element.removeClass('blinking-end');
+            element.removeClass(scope.finalClass);
         });
     }
   };

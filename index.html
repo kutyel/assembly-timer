@@ -4,28 +4,31 @@
     <title>Assembly Hall Timer</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link rel="shortcut icon" type="image/png" href="https://code.angularjs.org/favicon.ico"/>
-    <script src="node_modules/angular/angular.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script> -->
     <script src="js/timer.js"></script>
-    <script src="node_modules/angular-ui-bootstrap/ui-bootstrap.min.js"></script>
     <script src="js/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/angular-bootstrap/ui-bootstrap-csp.css">
+    <!-- <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet"> -->
 </head>
 <body ng-app="app">
     <div ng-controller="TimerCtrl as vm">
         <form>
-            <!-- TODO: add angular-ui-bootstrap -->
-            <input type="text" class="speak" placeholder="Minutes of the speak" ng-model="vm.deadline"></input>
-            <!-- TODO: class="glyphicon glyphicon-play"-->
-            <button class="btn btn-primary" ng-click="vm.startTimer()" ng-show="!vm.running">Start</button>
-            <!-- TODO: class="glyphicon glyphicon-pause"-->
-            <button ng-click="vm.resumeTimer()">Resume</button>
-            <!-- TODO: class="glyphicon glyphicon-stop"-->
-            <button ng-click="vm.stopTimer()" ng-disabled="!vm.running">Stop</button>
-            <input type="range" class="range" min=20 max=300 ng-model="vm.size" ng-change="vm.changeSize(vm.size)" ng-init="vm.size=20"></input>
+            <input type="text" placeholder="Minutes of the speak" ng-model="vm.deadline"></input>
+            <button class="btn btn-primary glyphicon glyphicon-play" ng-click="vm.startTimer()" ng-show="!vm.running">Start</button>
+            <button class="btn btn-default glyphicon glyphicon-pause" ng-click="vm.resumeTimer()">Resume</button>
+            <button class="btn btn-default glyphicon glyphicon-stop" ng-click="vm.stopTimer()" ng-disabled="!vm.running">Stop</button>
+            <input type="range" min=20 max=300 ng-model="vm.size" ng-change="vm.changeSize(vm.size)" ng-init="vm.size=20"></input>
             <input type="checkbox" ng-model="vm.blink">Blink?</input>
         </form>
-        <div class="timer" ng-style="vm.fontSize">
-            <!-- TODO: add class to toggle by param to the directive -->
-            <h1><timer countup="vm.deadline*60" finish-callback="vm.timeOver()" interval="1000" autostart="false"/>{{hhours}}:{{mminutes}}:{{sseconds}}</h1>
+        <div class="col-md-12" ng-style="vm.fontSize">
+            <h1>
+                <timer countup="vm.deadline*60" final-class="vm.blink ? 'blinking-end': 'end'" interval="1000" autostart="false">
+                    {{hhours}}:{{mminutes}}:{{sseconds}}
+                </timer>
+            </h1>
         </div>
     </div>
 </body>

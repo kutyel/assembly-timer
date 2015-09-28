@@ -1,14 +1,3 @@
-.timer {
-    width: 50%;
-    margin: 0 auto;
-    font-family: Arial;
-}
-.speak {
-    text-align: right;
-}
-.range {
-    vertical-align: middle;
-}
 .end {
     color:red;
 }
